@@ -1,29 +1,27 @@
-var bullets = new Bullets();
+var objects = [];
+var maxID = 0;
 
-function Bullets(){
-	this.objects = [];
-	this.maxID = 0;
+class Bullets{
 	
-	this.init = function(bullet){
+	init(bullet){
 		bullet.vx = bullet.v * Math.cos(bullet.angle);
 		bullet.vy = bullet.v * Math.sin(bullet.angle);
 	}
-	this.push = function(bullet){
-		
+
+	push(bullet){
 		this.init(bullet);
-		
 		var id = -1;
 		//Search empty space
-		while(this.objects[++id] != undefined);
-		this.objects[id] = bullet;
-		if(id > this.maxID) this.maxID = id;		
+		while(objects[++id] != undefined);
+		objects[id] = bullet;
+		if(id > maxID) maxID = id;		
 	};
 	
-	this.update = function(dt){
-		for(var i = 0;i <= this.maxID;i++){
-			if(this.objects[i] == undefined) continue;
+	update(dt){
+		for(var i = 0;i <= maxID;i++){
+			if(objects[i] == undefined) continue;
 			
-			var obj = this.objects[i];
+			var obj = objects[i];
 			
 			obj.x += obj.vx * dt;
 			obj.y += obj.vy * dt;
@@ -32,44 +30,44 @@ function Bullets(){
 				obj.x < 0 || obj.y < 0 ||
 				obj.x > width || obj.y > height ||
 				obj.remove)
-			delete this.objects[i];
+			delete objects[i];
 			
 		}
 	}
 	
-	this.render = function(ctx){
+	render(ctx){
 		ctx.fillStyle = "#000000";
-		for(var i = 0;i < this.maxID;i++){
-			if(this.objects[i] == undefined) continue;
+		for(var i = 0;i < maxID;i++){
+			if(objects[i] == undefined) continue;
 			
-			var obj = this.objects[i];
+			var obj = objects[i];
 			ctx.beginPath();
 			ctx.arc(obj.x,obj.y,2,0,6.28);
 			ctx.fill();
 		}
 	};
 	
-	this.getSize = function(){
+	getSize(){
 		var size = 0;
-		for(var i = 0;i <= this.maxID;i++){
-			if(this.objects[i] == undefined) continue;
+		for(var i = 0;i <= maxID;i++){
+			if(objects[i] == undefined) continue;
 			size++;
 		}
 		return size;
 	};
 	
-	this.getMinInfo = function(o){
+	getMinInfo(o){
 		var dist = 99999;
 		var obj;
-		for(var i = 0;i <= this.maxID;i++){
-			if(this.objects[i] == undefined) continue;
+		for(var i = 0;i <= maxID;i++){
+			if(objects[i] == undefined) continue;
 			var d = Math.sqrt(
-				(o.x - this.objects[i].x)*(o.x - this.objects[i].x)+
-				(o.y - this.objects[i].y)*(o.y - this.objects[i].y)
+				(o.x - objects[i].x)*(o.x - objects[i].x)+
+				(o.y - objects[i].y)*(o.y - objects[i].y)
 			);
 			if(d < dist){
 				dist = d;
-				obj = this.objects[i];
+				obj = objects[i];
 			}
 		}
 		return {dist:dist,object:obj};
@@ -77,3 +75,4 @@ function Bullets(){
 	
 }
 
+var bullets = new Bullets();

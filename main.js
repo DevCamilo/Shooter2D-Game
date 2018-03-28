@@ -15,18 +15,17 @@ function init(){
 	window.onkeydown = keyLogger.keyDownListener;
 	window.onkeyup = keyLogger.keyUpListener;
 	
-	//Init player
-	player.x = width/2;
-	player.y = height/2;
+	
 	
 	//Main game loop
 	
 	setInterval(function(){
-		
+	
+	// Velocidad del juego
 	updateGame(0.01);
 	renderGame();	
 		
-	},10);
+	},5);
 	
 }
 
@@ -42,6 +41,7 @@ function renderGame(){
 	bullets.render(ctx);
 	targets.render(ctx);
 }
+
 function renderBackground(){
 	ctx.fillStyle = "#c6c6c6";
 	ctx.fillRect(0,0,width,height);

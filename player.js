@@ -1,82 +1,81 @@
-var player = new Player();
+var x = window.innerWidth/2;
+var y = window.innerHeight/2;
+var vx = 0;
+var vy = 0;
+var v = 0;
+var angle = 0;
+var lastShootTime = 0;
 
-function Player(){
-	this.x = 0;
-	this.y = 0;
-	this.vx = 0;
-	this.vy = 0;
-	this.v = 0;
-	this.angle = 0;
-	this.lastShootTime = 0;
+var stats = {
+	maxV:100,
+	dAngle:0.03,
+	acc:10,
+	shootDelayMs:100
+};
+
+class Player{
 	
-	
-	this.stats = {
-		maxV:100,
-		dAngle:0.03,
-		acc:10,
-		shootDelayMs:100
-	};
-	
-	this.update = function(dt){
-		if(keyLogger.keyStatus.up){
-		this.v += this.stats.acc;
-		if(this.v > this.stats.maxV)
-			this.v = this.stats.maxV;
+	update(dt){
+		if(keyStatus.up){
+		v += stats.acc;
+		if(v > stats.maxV)
+			v = stats.maxV;
 		}
-		if(keyLogger.keyStatus.down){
-			this.v -= this.stats.acc;
-			if(this.v < -this.stats.maxV)
-				this.v = -this.stats.maxV;
+		if(keyStatus.down){
+			v -= stats.acc;
+			if(v < -stats.maxV)
+				v = -stats.maxV;
 		}
-		if(keyLogger.keyStatus.left){
-			this.angle -= this.stats.dAngle;
-			if(this.angle < 0)
-				this.angle += 2*Math.PI;
+		if(keyStatus.left){
+			angle -= stats.dAngle;
+			if(angle < 0)
+				angle += 2*Math.PI;
 		}
-		if(keyLogger.keyStatus.right){
-			this.angle += this.stats.dAngle;
-			if(this.angle > 2*Math.PI)
-				this.angle -= 2*Math.PI;
+		if(keyStatus.right){
+			angle += stats.dAngle;
+			if(angle > 2*Math.PI)
+				angle -= 2*Math.PI;
 		}
 		
 		
-		if(!(keyLogger.keyStatus.up || keyLogger.keyStatus.down))
-			this.v *= 0.99;
-		this.vx = this.v * Math.cos(this.angle);
-		this.vy = this.v * Math.sin(this.angle);
+		if(!(keyStatus.up || keyStatus.down))
+			v *= 0.99;
+		vx = v * Math.cos(angle);
+		vy = v * Math.sin(angle);
 		
-		this.x += this.vx * dt;
-		this.y += this.vy * dt;
+		x += vx * dt;
+		y += vy * dt;
 		
 		var time = utils.getTime();
-		if(keyLogger.keyStatus.fire &&
-			time - this.lastShootTime >= this.stats.shootDelayMs){
+		if(keyStatus.fire &&
+			time - lastShootTime >= stats.shootDelayMs){
 			bullets.push({
-				x:this.x,
-				y:this.y,
-				angle:this.angle,
+				x:x,
+				y:y,
+				angle:angle,
 				v:250
 			});
-			this.lastShootTime = time;
+			lastShootTime = time;
 		}
-		
-	};
+	}
 	
-	this.render = function(ctx){
+	render(ctx){
 		ctx.fillStyle="#FF0000";
 		ctx.beginPath();
-		ctx.arc(this.x,this.y,10,0,6.28);
+		ctx.arc(x,y,10,0,6.28);
 		ctx.fill();
 	
 		ctx.strokeStyle="#FF0000";
 		ctx.beginPath();
-		ctx.moveTo(this.x,this.y);
+		ctx.moveTo(x,y);
 		var pointerLength = 25;
 		ctx.lineTo(
-			this.x + pointerLength * Math.cos(this.angle),
-			this.y + pointerLength * Math.sin(this.angle)
+			x + pointerLength * Math.cos(angle),
+			y + pointerLength * Math.sin(angle)
 			);
 		ctx.stroke();
 	};
 	
 }
+
+var player = new Player();

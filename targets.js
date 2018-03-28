@@ -1,18 +1,5 @@
 var targets = new Targets();
 
-/*
-	Target{
-		x,
-		y,
-		v,
-		angle,
-		color,
-		size,
-		remove,
-		hitAnimClock
-	}
-	
-*/
 function Targets(){
 	
 	this.objects = [];
@@ -80,29 +67,32 @@ function Targets(){
 			delete this.objects[i];
 		}
 		
-		if(this.getSize() < 5){
+		// Genera la cantidad de enemigos por pantalla
+		if(this.getSize() < 5){ 
 			this.push({
 				x:Math.random()*width,
 				y:Math.random()*height,
-				v:5,
+				v:5, /*Velocidad de los enemigos*/
 				angle:Math.random()*2*Math.PI,
-				size:25,
+				size:25, /*Tamaño de los enemigos*/
 				color:{
 					r:Math.random(),
 					g:Math.random(),
 					b:Math.random(),
 				}
 			});
+			
 		}
 		
-		
 	};
+	
+
 	this.render = function(ctx){
 		for(var i = 0;i < this.maxID;i++){
 			if(this.objects[i] == undefined) continue;
 			
-			var obj = this. objects[i];
-			
+			var obj = this.objects[i];
+
 			obj.scale = 1;
 			if(obj.hitAnimClock != -1){
 				obj.alpfa = 1 - obj.hitAnimClock*1.5;
@@ -110,6 +100,7 @@ function Targets(){
 				obj.scale = 1 + 2 * obj.hitAnimClock;
 				obj.nextAlpfa = obj.alpfa;
 			}
+
 			ctx.fillStyle = utils.getARGBString(
 				obj.alpfa,
 				obj.color.r,
@@ -119,13 +110,21 @@ function Targets(){
 			ctx.globalAlpha=obj.alpfa;
 			ctx.beginPath();
 			ctx.arc(obj.x,obj.y,obj.size * obj.scale,0,6.28);
-			ctx.fill();
+			ctx.fill()
 			ctx.globalAlpha=1;
+
+			// Medidor de vida
+			ctx.strokeStyle="#FF0000";
+			ctx.beginPath();
+			ctx.moveTo(obj.x,obj.y);
+			var pointerLength = 25;
+			ctx.lineTo(
+			obj.x + pointerLength * Math.cos(0),
+			obj.y + pointerLength * Math.sin(0)
+			);
+			ctx.stroke();
+			
 		}
 	};
-	
-	
-	
-	
 	
 }

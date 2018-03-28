@@ -1,79 +1,78 @@
-var keyLogger = new KeyLogger();
+var keyStatus = {up:false,down:false,left:false,right:false,fire:false};
 
-function KeyLogger(){
-	
-	this.keyStatus = {up:false,down:false,left:false,right:false,fire:false};
-	this.keyDownListener = function(e){
+class KeyLogger {
+	keyDownListener(e){
+		var key = e.keyCode ? e.keyCode : e.which;
+		// console.log(key);
+		switch(key){
+		
+		case 87:
+		case 38:
+		//Up
+			keyStatus.up = true;
+		break;
+		case 83:
+		case 40:
+		//Down
+			keyStatus.down = true;
+		break;
+		case 65:
+		case 37:
+		//Left
+			keyStatus.left = true;
+		break;
+		case 68:
+		case 39:
+		//Rigth
+			keyStatus.right = true;
+		break;
+		case 32:
+		//Space
+			keyStatus.fire = true;
+		break;
+		
+		default:
+			//console.log("Key:" + key);
+		return !false;
+	}
+	return !true;
+	}
+
+	keyUpListener(e){
 		var key = e.keyCode ? e.keyCode : e.which;
 		switch(key){
 		
 		case 87:
 		case 38:
 		//Up
-			keyLogger.keyStatus.up = true;
+			keyStatus.up = false;
 		break;
 		case 83:
 		case 40:
 		//Down
-			keyLogger.keyStatus.down = true;
+			keyStatus.down = false;
 		break;
 		case 65:
 		case 37:
 		//Left
-			keyLogger.keyStatus.left = true;
+			keyStatus.left = false;
 		break;
 		case 68:
 		case 39:
 		//Rigth
-			keyLogger.keyStatus.right = true;
+			keyStatus.right = false;
 		break;
 		case 32:
 		//Space
-			keyLogger.keyStatus.fire = true;
+			keyStatus.fire = false;
 		break;
-		
 		default:
-			console.log("Key:" + key);
-			return !false;
+			// console.log("Key:" + key);
+		return !false;
 	}
 	return !true;
 	};
-	this.keyUpListener = function(e){
-		var key = e.keyCode ? e.keyCode : e.which;
-		switch(key){
-		
-		case 87:
-		case 38:
-		//Up
-			keyLogger.keyStatus.up = false;
-		break;
-		case 83:
-		case 40:
-		//Down
-			keyLogger.keyStatus.down = false;
-		break;
-		case 65:
-		case 37:
-		//Left
-			keyLogger.keyStatus.left = false;
-		break;
-		case 68:
-		case 39:
-		//Rigth
-			keyLogger.keyStatus.right = false;
-		break;
-		case 32:
-		//Space
-			keyLogger.keyStatus.fire = false;
-		break;
-		default:
-			console.log("Key:" + key);
-			return !false;
-	}
-	return !true;
-	};
-	
-	
-	
-	
+
 }
+
+var keyLogger = new KeyLogger();
