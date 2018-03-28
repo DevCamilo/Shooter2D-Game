@@ -10,7 +10,8 @@ var stats = {
 	maxV:100,
 	dAngle:0.03,
 	acc:10,
-	shootDelayMs:100
+	shootDelayMs:100,
+	lives:20 
 };
 
 class Player{
@@ -59,11 +60,22 @@ class Player{
 		}
 	}
 	
+	life(){
+		ctx.strokeStyle="#FF0000";
+		ctx.beginPath();
+		ctx.moveTo(x-18,y+28);
+		ctx.lineTo(x + stats.lives, y + 28);
+		ctx.fill();
+		ctx.closePath();
+		ctx.stroke();
+	}
+
 	render(ctx){
 		ctx.fillStyle="#FF0000";
 		ctx.beginPath();
 		ctx.arc(x,y,10,0,6.28);
 		ctx.fill();
+		ctx.closePath();
 	
 		ctx.strokeStyle="#FF0000";
 		ctx.beginPath();
@@ -72,8 +84,13 @@ class Player{
 		ctx.lineTo(
 			x + pointerLength * Math.cos(angle),
 			y + pointerLength * Math.sin(angle)
-			);
+		);
+		ctx.fill();
+		ctx.closePath();
 		ctx.stroke();
+
+		this.life();
+		
 	};
 	
 }

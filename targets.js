@@ -116,11 +116,10 @@ function Targets(){
 			// Medidor de vida
 			ctx.strokeStyle="#FF0000";
 			ctx.beginPath();
-			ctx.moveTo(obj.x,obj.y);
-			var pointerLength = 25;
+			ctx.moveTo(obj.x-25,obj.y+30);
 			ctx.lineTo(
-			obj.x + pointerLength * Math.cos(0),
-			obj.y + pointerLength * Math.sin(0)
+			obj.x + 25,
+			obj.y + 30
 			);
 			ctx.stroke();
 			
