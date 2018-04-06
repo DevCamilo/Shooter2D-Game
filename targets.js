@@ -4,6 +4,7 @@ function Targets(){
 	
 	this.objects = [];
 	this.maxID = 0;
+	this.points = 0;
 	
 	this.init = function(target){
 		target.vx = target.v * Math.cos(target.angle);
@@ -12,7 +13,7 @@ function Targets(){
 		target.scale = 1;
 		target.alpfa = 0;
 		target.nextAlpfa = 1;
-		target.life = 25;
+		target.life = 30;
 	}
 	
 	this.push = function(target){
@@ -49,10 +50,12 @@ function Targets(){
 				if(info.dist <= obj.size * obj.scale){     
 					info.object.remove = true;
 					if(obj.hitAnimClock == -1)
-						if(obj.life == -25){
-						obj.hitAnimClock = 0;
+						// Life --
+						if(obj.life == -20){
+							this.points ++;
+							obj.hitAnimClock = 0;
 					}else{
-						obj.life -= 5;
+						obj.life -= 10;
 					}
 					//console.log(obj.life);
 				}
@@ -124,11 +127,11 @@ function Targets(){
 			ctx.beginPath();
 			ctx.moveTo(obj.x-obj.life,obj.y+30);
 			ctx.lineTo(
-			obj.x + 25,
+			obj.x + 30,
 			obj.y + 30
 			);
 			ctx.stroke();
-			
+
 		}
 	};
 	

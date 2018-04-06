@@ -89,6 +89,11 @@ class Player{
 		ctx.closePath();
 		ctx.stroke();
 
+		ctx.font = '12px Lucida Sans Unicode';
+		ctx.fillStyle = 'black';
+		ctx.fillText("Points " + targets.points ,x - 20, y - 20);
+
+
 		this.life();
 		
 	};
