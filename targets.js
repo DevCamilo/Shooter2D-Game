@@ -12,6 +12,7 @@ function Targets(){
 		target.scale = 1;
 		target.alpfa = 0;
 		target.nextAlpfa = 1;
+		target.life = 25;
 	}
 	
 	this.push = function(target){
@@ -48,7 +49,12 @@ function Targets(){
 				if(info.dist <= obj.size * obj.scale){     
 					info.object.remove = true;
 					if(obj.hitAnimClock == -1)
+						if(obj.life == -25){
 						obj.hitAnimClock = 0;
+					}else{
+						obj.life -= 5;
+					}
+					//console.log(obj.life);
 				}
 			}
 			if(obj.hitAnimClock != -1){
@@ -116,7 +122,7 @@ function Targets(){
 			// Medidor de vida
 			ctx.strokeStyle="#FF0000";
 			ctx.beginPath();
-			ctx.moveTo(obj.x-25,obj.y+30);
+			ctx.moveTo(obj.x-obj.life,obj.y+30);
 			ctx.lineTo(
 			obj.x + 25,
 			obj.y + 30
