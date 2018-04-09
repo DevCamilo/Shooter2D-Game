@@ -108,8 +108,10 @@ function Targets(){
 				if(obj.alpfa < 0)obj.alpfa = 0;
 				obj.scale = 1 + 2 * obj.hitAnimClock;
 				obj.nextAlpfa = obj.alpfa;
+				;
 			}
 
+			// Dibuja el circulo
 			ctx.fillStyle = utils.getARGBString(
 				obj.alpfa,
 				obj.color.r,
