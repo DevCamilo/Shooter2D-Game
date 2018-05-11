@@ -1,0 +1,9 @@
+{
+    "name": "shooter-2d",
+    "version": "0.0.1",
+    "description": "test conection",
+    "dependencies": {
+        "express": "^4.15.2",
+        "socket.io": "^2.1.0"
+    }
+}
